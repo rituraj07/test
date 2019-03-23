@@ -1,0 +1,395 @@
+<% include header %>
+	<!-- /NAVIGATION -->
+	<style>
+	/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}</style>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.8.2.js"></script>
+	<script> $(window).load(function(){ 
+           // alert("qwert");
+   $('#myModal').modal('show');
+            
+    }); </script>
+	<script type="text/javascript">
+		function confirm_click()
+		{
+		return confirm("Are you sure, This will delete the Ad ?");
+		}
+		
+		</script>
+	<script>
+		function getLocationPro(){// alert("1qwerty");
+			if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPositionPro);
+		} else { 
+			document.getElementById("loc").value = "Geolocation is not supported";
+		}
+		}
+		function showPositionPro(position) {// alert("1qwerty");
+	var lc;
+		 var lat=position.coords.latitude;
+		//+ 
+		//"<br>Longitude: " + 
+	   var lon=position.coords.longitude;
+	   document.getElementById("lat").value=lat;
+	   document.getElementById("long").value=lon;
+		
+}
+window.onload = getLocationPro;
+		</script>
+	<div class="container">
+			<% if(!user.address){ %>
+				<div class="alert alert-danger" role="alert"><p >Your Profile information is incomplete</p></div>
+			   <% } %>
+	<% if(user.posts.length>0){%>
+	<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Remove the books which have been sold</h4>
+      </div>
+      <div class="modal-body ">
+        <div class="row">
+        <div class="col-md-12">
+						<div class="order-summary clearfix">
+							<div class="section-title">
+								<h3 class="title">Your Ads</h3>
+							</div>
+							<table class="shopping-cart-table table">
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th class="">Description</th>
+										<th class="text-center ml">Price</th>
+										<th class="text-center ml">Condition</th>
+										
+										<th class="text-right ml">Edit</th>
+										<th class="text-right">Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+								<% user.posts.forEach(function(item){ %>
+								
+									<tr>
+											<% var im = String(item.image); 
+											var v=0;
+											 for(var i=im.length;i>=0;i--)
+											 {
+												
+												 if(im.charAt(i)=='/')
+												 {
+													
+													 v++;
+													 if(v==2){
+														 var brk=i;
+													break;}
+												 }
+											 }
+											 var p1=im.slice(0,brk);
+											 var p2='/q_10';
+											 var p3=im.slice(brk,im.length);
+											 var p=p1+p2+p3;
+											%>
+											
+										<td class="thumb"><img src="<%= p %>" alt=""></td>
+										<td class="details">
+										
+											<a onclick="showldr()" href="/<%=item._id%>/book"><%= item.bookName %></a>
+											<ul>
+												<li><span><%= item.authorName %></span></li>
+												<li><span><%= item.category %></span></li>
+											</ul>
+										</td>
+										<td class="price text-center ml"><strong>₹<%= item.price %></strong><br></td>
+										<td class="qty text-center ml"><p><%= item.bookCondition %> </p></td>
+										<td class="text-right ml"><a onclick="showldr()" href="/<%= item._id %>/edit"><button class="main-btn icon-btn">Edit</button></a></td>
+										<td class="text-right"><a  onclick="return confirm_click();" href="/<%= item._id %>/del"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></a></td>
+										
+									</tr>
+									
+									<%  }); %>
+								</tbody>
+								
+							</table>
+							
+						</div>
+</div>
+					</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<% } %>
+	<div class="row page-header text-center" style="margin: 20px 0 20px;">
+	
+		<h3 class="col-md-8 col-xs-8" style="    padding-left: 33%;"><span class="fa fa-user-o"></span> Profile</h3>
+		<a onclick="showldr()" class="col-md-4 col-xs-4" href="/logout" style="    padding-right: 0px;" class="btn btn-default btn-sm"><button style="border-color: #FF5722;" class="btn btn-default btn-sm">Logout</button></a>
+	</div>
+   <div class="page-header text-center" style="    margin: 10px 0 20px;">
+		
+		<a onclick="showldr()" href="/profile/<%= user._id %>"><button class="btn btn-primary">go to chat</button></a>
+		</div>
+		
+	
+	<div class="row">
+
+		<!-- LOCAL INFORMATION -->
+		
+
+		<!-- FACEBOOK INFORMATION -->
+		<div class="col-sm-6">
+			<div class="well">
+				<h3 class="text-primary"> Account</h3>
+
+				<!-- check if the user has this token (is the user authenticated with this social account) -->
+				
+					<p>
+						<strong>id</strong>: <%= user._id %><br>
+						
+						<strong>email</strong>: <%= user.email %><br>
+						<strong>name</strong>: <%= user.name %><br>
+						<% if(user.phNumber){ %>
+						<strong>Phone Number</strong>: <%= user.phNumber %><br>
+						<% } %>
+						<strong>Show phone number in Ad </strong>: <% if(String(user.showphNumber)==="on"){ %>
+							Yes
+							<% }else{ %>
+								No
+
+						<% } %>
+						<br>
+						<% if(user.address){ %>
+							<strong>Pickup Address</strong>: <%= user.address %><br>
+							<% } %>
+					</p>
+					
+
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="well">
+				<h3 class="text-primary"> Update Profile Info</h3>
+
+				<!-- check if the user has this token (is the user authenticated with this social account) -->
+				
+					
+						<form class="form" action="/updateInfo" method="post">
+							<div class="form-group">
+									<div class="col-md-12"><strong>Address:</strong></div>
+									<div class="col-md-12">
+										<input type="text"  name="address" placeholder="Book pickup address" class="form-control" value="" required/>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12"><strong>City:</strong></div>
+									<div class="col-md-12">
+										<input type="text" name="city" placeholder="City" class="form-control" value="" required/>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12"><strong>State:</strong></div>
+									<div class="col-md-12">
+										<input type="text" name="state" placeholder="State" class="form-control" value="" required/>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12"><strong>Zip / Postal Code:</strong></div>
+									<div class="col-md-12">
+										<input type="number" name="zip_code" placeholder="PIN Code" class="form-control" value="" required/>
+									</div>
+								</div>
+								<div class="form-group">
+										<div class="col-md-12"><strong>Phone Number:</strong></div>
+										<div class="col-md-12">
+											<input type="number" placeholder="Phone Number" name="num" class="form-control" value="" required/>
+										</div>
+									</div>
+									<div class="form-group" style="display: none;">
+											<div class="col-md-12"><strong>lat</strong></div>
+											<div class="col-md-12">
+												<input id="lat" type="text" placeholder="Phone Number" name="lat" class="form-control" value=""/>
+											</div>
+										</div>
+										<div class="form-group" style="display: none;">
+												<div class="col-md-12"><strong>long</strong></div>
+												<div class="col-md-12">
+													<input id="long" type="text" placeholder="Phone Number" name="long" class="form-control" value=""/>
+												</div>
+											</div>
+						    <div class="form-group">
+						        
+								
+								<label style="    padding-top: 5px;    padding-left: 15px;">Do you want to show number in your ad  </label>
+								
+								<label style="    margin-left: 14px;" class="switch">
+										<input name="showNumber" type="checkbox">
+										<span class="slider round"></span>
+									  </label>
+									
+									</div>
+									<div class="form-group">
+								        <button onclick="showldr()" style="    margin-left: 15px;"ype="submit" class="btn btn-warning"> Submit</button>
+									</div>
+
+						</form> 
+						
+						
+					
+					
+
+			</div>
+		</div>
+	</div>
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				
+					
+
+					
+
+					<div class="col-md-12">
+						<div class="order-summary clearfix">
+							<div class="section-title">
+								<h3 class="title">Your Ads</h3>
+							</div>
+							<table class="shopping-cart-table table">
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th class="ml">Description</th>
+										<th class="text-center">Price</th>
+										<th class="text-center ml">Condition</th>
+										
+										<th class="text-right">Edit</th>
+										<th class="text-right">Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+								<% user.posts.forEach(function(item){ %>
+								
+									<tr><% var im = String(item.image); 
+										var v=0;
+										 for(var i=im.length;i>=0;i--)
+										 {
+											
+											 if(im.charAt(i)=='/')
+											 {
+												
+												 v++;
+												 if(v==2){
+													 var brk=i;
+												break;}
+											 }
+										 }
+										 var p1=im.slice(0,brk);
+										 var p2='/q_10';
+										 var p3=im.slice(brk,im.length);
+										 var p=p1+p2+p3;
+										%>
+										<td class="thumb"><img src="<%= p %>" alt=""></td>
+										<td class="details ml">
+										
+											<a onclick="showldr()" href="/<%=item._id%>/book"><%= item.bookName %></a>
+											<ul>
+												<li><span><%= item.authorName %></span></li>
+												<li><span><%= item.category %></span></li>
+											</ul>
+										</td>
+										<td class="price text-center"><strong>₹<%= item.price %></strong><br></td>
+										<td class="qty text-center ml"><p><%= item.bookCondition %></p></td>
+										<td class="text-right"><a onclick="showldr()" href="/<%= item._id %>/edit"><button class="main-btn icon-btn">Edit</button></a></td>
+										<td class="text-right"><a  onclick="return confirm_click();" href="/<%= item._id %>/del"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></a></td>
+										
+									</tr>
+									
+									<%  }); %>
+								</tbody>
+								
+							</table>
+							
+						</div>
+
+					</div>
+				
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	
+	
+	
+
+
+	
+
+</div>
+<% include footer %>

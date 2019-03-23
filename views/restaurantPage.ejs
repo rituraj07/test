@@ -1,0 +1,102 @@
+<% include header %>
+
+<style>
+	@media screen and (max-width: 786px){
+	.imgformob{
+		margin-left: auto;
+							margin-right: auto;
+							width: 70%;
+							
+							max-height: 370px;
+	}
+	.imgsz{
+		max-height: 350px;
+	}
+	}
+	@media screen and (min-width: 786px){
+		.imgsz{
+			max-height: 550px;
+		}
+	}
+</style>
+
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb">
+		<div class="container">
+			<ul class="breadcrumb">
+				<li><a onclick="showldr()" href="/">Home</a></li>
+				<li><a onclick="showldr()" href="/">Products</a></li>
+				
+				<li class="active"><%= restaurant['Restaurant Name'] %></li>
+			</ul>
+		</div>
+	</div>
+	<!-- /BREADCRUMB -->
+
+	<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!--  Product Details -->
+				<div class="product product-details clearfix">
+					<div class="col-md-6 col-xs-12">
+						
+							<div class="product-view product-label imgformob" style="    padding-bottom: 6%;
+							 ">
+                             <% if(restaurant['Rating color']=="Dark Green"){ %>
+                                <span style="position: absolute;"><strong style="color:rgb(2, 92, 32) "><%= restaurant['Rating text'] %></strong> </span>
+                                <% }else{ %>
+                                    <span style="position: absolute;"><strong style="color:<%= restaurant['Rating color'] %> "><%= restaurant['Rating text'] %></strong> </span>
+                                
+                                     <%}%>
+                                     <img class="imgsz" src="/img/noimg.png" alt="">
+							</div>
+							</div>
+					<div class="col-md-6">
+						<div class="product-body">
+							<div class="product-label">
+							
+								
+							<h2 class="product-name"><%= restaurant['Restaurant Name'] %></h2>
+							<div class="row" >
+							<h3 class="product-price col-md-12 col-xs-12" style="    font-size: 40px;">₹ <%= restaurant['Average Cost for two'] %> </h3>
+							</div>
+							
+                            <p style="font-size: 20px;"><strong>Cuisines:</strong> 
+                                <% restaurant.Cuisines.forEach(function(item){ %>
+                                    <%= item %> ,
+                                    <% }); %>
+                            
+                            
+                            </p>
+							
+							<p style="font-size: 20px;"><strong>Has Table booking:</strong> <%= restaurant['Has Table booking'] %></p>
+							
+							<p style="font-size: 20px;"><strong>Has Online delivery : </strong><%= restaurant['Has Online delivery'] %></p>
+							
+								<p style="font-size: 20px;"><strong>Currency : </strong><%= restaurant['Currency'] %></p>
+								
+                            
+							
+							<p style="font-size: 20px;"><strong>No of time Appeared in serches : </strong><%= resA.appearance %></p>
+							
+						</div>
+					</div>
+					
+
+				</div>
+				<!-- /Product Details -->
+			</div>
+		</div>
+		
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+	<!-- section -->
+	
+	<!-- /section -->
+
+<% include footer %>

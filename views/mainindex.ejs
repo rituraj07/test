@@ -1,0 +1,193 @@
+<% include header %>
+	<!-- /NAVIGATION -->
+	
+	<style>
+	/*	.product-price{
+			color: #e24b2a;font-size: 24px;
+		}
+		*/
+		
+		.card1 {
+  display: flex;
+  background-color: #fdfdfd;
+  margin-right: 5px;
+	margin-left: 0px;
+	
+  min-height: 200px;
+  overflow-x: auto; 
+}
+
+.card1::-webkit-scrollbar {
+  display: none;
+}
+
+.card--content {
+	background-color: #ffffff;
+	border: 1.75px solid #f59999e0;
+  min-width: 160px;
+  margin: 2px;
+  max-height: 300px;
+  border-radius: 5px;
+  max-width: 180px;
+  box-shadow: 2px 2px 9px;
+}
+		.p-name{
+			font-size: 20px;
+		}
+	@media screen and (max-width: 786px){
+		.hd{
+    font-weight: 600;
+    font-size: 115%;
+		}
+		.product-price{
+			font-size: 18px;
+		}
+		.tm{
+			max-height: 300px;}
+		.p-name{
+			font-size: 16px;
+			
+		}
+		.pnm{
+			font-weight: normal;
+    color: #1c120f;
+	font-family: sans-serif;
+		}
+		.minmaxh{
+			max-height: 200px;
+			min-height: 200px;
+			
+		}
+		.product.product-single .product-body{
+			padding: 0px;
+		}
+		.product.product-single{
+			margin-top: 0px; 
+		}
+		.col-xs-6{
+			padding-right: 2px;
+    padding-left: 2px;
+		}
+		.p-date{
+			font-size: 11px;
+			padding-top: 7px;
+		}
+		.img-fluid{
+			max-height: 170px;
+		}
+		.thumbnail{
+			min-height: 290px;
+			border: 1px solid #dddddda6;
+		}
+		strong {
+     color: #9c7668;
+				}
+		.primary-btn{
+			padding: 5px 9px;
+			font-weight: 500;
+			font-size: 12px;
+
+		}
+		.product-rating{
+			display: none;
+		}
+	}
+	</style>
+
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+	<!--	<% if(false){ %>
+                <div class="col-md-12">
+						<img src="/img/sorry.gif" class="mob-gif">
+                    <div class="alert alert-danger" role="alert">
+                    <h3 style="padding-top: 10px;
+    text-align: center;
+    padding-bottom: 10px;">Nothing Found</h3></div>
+                </div>
+                <% } %>
+			 row -->
+			<div class="row">
+					<div class="col-md-12">
+							<% if(result) {%> 
+					<div class="section-title">
+							<h4 class="title">Result for: <%= result %> 
+
+							</h4>
+							<h4 style="padding-left: 20px;color: red" class="title">Count: <%= Restaurant.length %> 
+								
+							</h4>
+							<div class="pull-right">
+								<div class="product-slick-dots-2 custom-dots">
+								</div>
+							</div>
+						</div>
+						<%}else{%>
+							<div class="section-title">
+									<h4 class="title">Restaurants</h4>
+									<div class="pull-right">
+										<div class="product-slick-dots-2 custom-dots">
+												<li class="header-account" style="float: right;"> <div class="dropdown">
+														
+														   
+															<button type="button" class="btn btn-warning btn-lg dropdown-toggle mob" data-toggle="dropdown">
+															
+																
+																<i class="fa fa-user-circle"></i> Sort By<span class="caret"></span></button>
+															<ul class=" dropdown-menu">
+									<li style="    font-size: 23px;"><a onclick="showldr()" href="/sortby/rating">Rating</a></li>
+									<li style="padding: 10px 2px;    font-size: 23px;"><a onclick="showldr()" href="/sortby/votes">Votes
+									</a></li>
+									<li style="padding: 10px 2px;    font-size: 23px;"> <a onclick="showldr()" href="/sortby/avgcost">Avg cost</a></li>
+								</ul></div></li>
+														
+										</div>
+									</div>
+								</div>
+
+							<% } %>
+						</div>
+				<% Restaurant.forEach(function(item){ %>
+				
+				<div id="cls" class="card col-md-3 col-sm-6 col-xs-6">
+					<div class="thumbnail product product-single tm" style="    min-height: 400px;" >
+					<a href="/restaurant/<%= item._id %>">
+						<div class="product-thumb">
+							<div class="product-label">
+											<span style="background-color: #00000059;">Rating: <%- item['Aggregate rating'] %></span>
+											
+										</div>
+							<img src="/img/noimg.png" alt="Book Image" class="img-fluid"  style="height: 270px;">
+						</div></a>
+						
+						<div class="product-body">
+							<h3  class="product-price" style="color: #fd8c27;" ><%= item['Restaurant Name'] %></h3>
+							<div class="p-date" style="float:right;padding-top: 4px;">
+								<% if(item['Rating color']=="Dark Green"){ %>
+									<span><strong style="color:rgb(2, 92, 32) "><%= item['Rating text'] %></strong> </span>
+									<% }else{ %>
+										<span><strong style="color:<%= item['Rating color'] %> "><%= item['Rating text'] %></strong> </span>
+									
+										 <%}%>
+									
+								</div>
+										<h2 class="product-name pnm"><a href="">Votes: <%= item['Votes'] %></a></h2>
+										
+							
+							
+						</div>
+						
+					</div>
+                    </div>
+				<% }); %>
+				
+				<!-- /Product Single -->
+				
+			</div>
+			
+			
+			
+		</div>
+		<!-- /container -->
+	</div>
+	<% include footer %>
