@@ -121,7 +121,7 @@ app.use(express.static('views'));
          var u = true;
          else
          u= false;
-            res.render("mainindex.ejs",{chk:u,userr:req.user,Restaurant:allRestaurant,result:null});
+            res.render("mainindex.ejs",{chk:u,user:req.user,Restaurant:allRestaurant,result:null});
         });
     }
     else if(req.query.Restaurant&&!req.query.Cuisines)
@@ -149,7 +149,7 @@ app.use(express.static('views'));
           // console.log(allRestaurant);
             //res.send(JSON.stringify(allPost));
             //console.log( allRestaurant['Aggregate rating']);
-            res.render("mainindex.ejs",{chk:req.isAuthenticated(),userr:req.user,user:null,Restaurant:allRestaurant,result:req.query.Restaurant});
+            res.render("mainindex.ejs",{chk:req.isAuthenticated(),user:req.user,user:null,Restaurant:allRestaurant,result:req.query.Restaurant});
             
         });
     }
@@ -164,7 +164,7 @@ app.use(express.static('views'));
           // console.log(allRestaurant);
             //res.send(JSON.stringify(allPost));
             //console.log( allRestaurant['Aggregate rating']);
-            res.render("mainindex.ejs",{chk:req.isAuthenticated(),userr:req.user,user:null,Restaurant:allRestaurant,result:req.query.Cuisines});
+            res.render("mainindex.ejs",{chk:req.isAuthenticated(),user:req.user,user:null,Restaurant:allRestaurant,result:req.query.Cuisines});
         });
     }
 });
@@ -183,7 +183,7 @@ app.get("/sortby/rating",function(req,res){
      var u = true;
      else
      u= false;
-        res.render("mainindex.ejs",{chk:u,userr:req.user,Restaurant:allRestaurant,result:null});
+        res.render("mainindex.ejs",{chk:u,user:req.user,Restaurant:allRestaurant,result:null});
     });
 
 });
@@ -201,7 +201,7 @@ app.get("/sortby/votes",function(req,res){
      var u = true;
      else
      u= false;
-        res.render("mainindex.ejs",{chk:u,userr:req.user,Restaurant:allRestaurant,result:null});
+        res.render("mainindex.ejs",{chk:u,user:req.user,Restaurant:allRestaurant,result:null});
     });
 
 });
@@ -219,7 +219,7 @@ app.get("/sortby/avgcost",function(req,res){
      var u = true;
      else
      u= false;
-        res.render("mainindex.ejs",{chk:u,userr:req.user,Restaurant:allRestaurant,result:null});
+        res.render("mainindex.ejs",{chk:u,user:req.user,Restaurant:allRestaurant,result:null});
     });
 
 });
